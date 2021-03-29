@@ -1,0 +1,48 @@
+{{>layout/header}}
+
+
+<h1> 스프링 부트로 구현하는 김영기 웹 서비스 </h1>
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/posts/save" role="button" class="btn btn-primary">
+                게시글 등록
+            </a>
+        </div>
+    </div>
+    <br>
+    <!-- 목록 출력 영역 -->
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>게시글번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>최종수정일</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#posts}}  <!-- 머스테치 문법 리스트 돌려서 찍어주는거(for) -->
+            <tr>
+                <td>{{id}}</td>   <!-- 리스트에서 뽑은 객체 핃드값 -->
+                <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                <td>{{author}}</td>
+                <td>{{modifiedDate}}</td>
+            </tr>
+        {{/posts}}
+        </tbody>
+    </table>
+</div>
+<!--
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/secretPage" role="button" class="btn btn-primary">
+                테스트용
+            </a>
+        </div>
+    </div>
+</div>
+-->
+
+{{>layout/footer}}
