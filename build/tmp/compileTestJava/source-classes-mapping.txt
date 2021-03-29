@@ -1,4 +1,0 @@
-com/example/book/springboot/ApplictionTest.java
- com.example.book.springboot.ApplictionTest
-com/example/book/springboot/web/HelloControllerTest.java
- com.example.book.springboot.web.HelloControllerTest
