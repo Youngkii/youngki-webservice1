@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -18,7 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class) // 테스트를 진행할 때 JUnit에 내장된 실행자 외 다른 실행자를 실행시킴(여기선 SpringExtension 라는 스프링 실행자)
 @WebMvcTest(controllers = HelloController.class,
         excludeFilters = {
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+                                      classes = SecurityConfig.class)
         }
 )// Web 테스트 어노테이션
 public class HelloControllerTest {
@@ -26,6 +28,7 @@ public class HelloControllerTest {
     @Autowired // Bean 주입
     private MockMvc mvc; // 웹 API 테스트할때, 이 클래스로 GET, POST 등에 대한 테스트가 가능
 
+    @WithMockUser(roles="USER")
     @Test
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
@@ -35,6 +38,7 @@ public class HelloControllerTest {
                 .andExpect(content().string(hello)); // 위 mvc.perform 결과 검증, 응답 내용의 본문(컨트롤러에서 hello를 리턴하라고 했으니까 여기서도 hello인지 검증)
     }
 
+    @WithMockUser(roles="USER")
     @Test
     public void helloDeto가_리턴된다() throws Exception {
         String name = "hello";
