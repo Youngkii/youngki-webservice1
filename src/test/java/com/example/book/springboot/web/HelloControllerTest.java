@@ -1,10 +1,13 @@
 package com.example.book.springboot.web;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.example.book.springboot.config.auth.SecurityConfig;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -12,8 +15,12 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class) // 테스트를 진행할 때 JUnit에 내장된 실행자 외 다른 실행자를 실행시킴(여기선 SpringRunner 라는 스프링 실행자)
-@WebMvcTest(controllers = HelloController.class) // Web 테스트 어노테이션
+@ExtendWith(SpringExtension.class) // 테스트를 진행할 때 JUnit에 내장된 실행자 외 다른 실행자를 실행시킴(여기선 SpringExtension 라는 스프링 실행자)
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)// Web 테스트 어노테이션
 public class HelloControllerTest {
 
     @Autowired // Bean 주입
